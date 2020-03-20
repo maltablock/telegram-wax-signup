@@ -1,0 +1,10 @@
+{
+    "keys": {
+        "bot": "xxxxxxxxxxxxxxxxxxxxxxxxxxx",
+        "wax": "5xxxxxxxxxxxxxxxxxxxxxxxxxx"
+    },
+    "waxAccountName": "waxmeetupbot",
+    "waxSmartContractName": "signupwaxwax",
+    "waxAmount": "1.50000000 WAX",
+    "apiEndpoint": "https://chain.wax.io"
+}
