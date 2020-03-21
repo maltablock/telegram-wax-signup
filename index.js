@@ -120,7 +120,7 @@ bot.on('/new_account', async (msg) => {
 
     // Error message
     if (!config.authorizedChatGroupIds.includes(msg.chat.id) && config.authorizedChatGroupIds.length !== 0) bot.sendMessage(msg.chat.id, `😔 Sorry, you need to be in the @wax_blockchain_meetup group to use this bot.`)
-    if (!accountName || !publicKey) bot.sendMessage(msg.chat.id, `😔 Sorry, you need to provide accountName & publicKey`)
+    else if (!accountName || !publicKey) bot.sendMessage(msg.chat.id, `😔 Sorry, you need to provide accountName & publicKey`)
     else if (accountName && accountName.length !== 12) bot.sendMessage(msg.chat.id, `😔 Sorry, your account name must be 12 characters long, no more, no less.`)
     else if (invalidCharaters.length !== 0) bot.sendMessage(msg.chat.id, `😔 Sorry, the following character(s) are not allowed: \n${invalidCharaters.join('  ')}`)
     else if (hasDotAtInvalidPos) bot.sendMessage(msg.chat.id, `😔 Sorry, you cannot use dots ( . ) for the first nor the last character of your account name.`)
@@ -145,7 +145,7 @@ bot.on('/new_account', async (msg) => {
                 bot.sendMessage(msg.chat.id, `😔 Account created failed.\nPlease contact an admin in the @wax_blockchain_meetup group`)
             }
         } else {
-            bot.sendMessage(msg.chat.id, `😔 Sorry, you already have created a account.`)
+            bot.sendMessage(msg.chat.id, `😔 Sorry, you already have created an account.`)
         }
     }
 })
