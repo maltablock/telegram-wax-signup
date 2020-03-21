@@ -94,7 +94,6 @@ bot.on('/new_account', async (msg) => {
     let hasDotAtInvalidPos = false
     let isAccountNameAvailable = false
     let isPubKeyValid = ecc.isValidPublic(publicKey)
-    let error = false
     
     if (accountName && accountName.length === 12) {
         accountName.split('').forEach((char, i) => {
@@ -107,8 +106,7 @@ bot.on('/new_account', async (msg) => {
     }
     
     // Error message
-    if (error) {bot.sendMessage(msg.chat.id, `😔 Sorry, an error occured.`)}
-    else if (!config.authorizedChatGroupIds.includes(msg.chat.id) && config.authorizedChatGroupIds.length !== 0) bot.sendMessage(msg.chat.id, `😔 Sorry, to use the bot, you need to be in one of the authorized groups`)
+    if (!config.authorizedChatGroupIds.includes(msg.chat.id) && config.authorizedChatGroupIds.length !== 0) bot.sendMessage(msg.chat.id, `😔 Sorry, to use the bot, you need to be in one of the authorized groups`)
     else if (!accountName || !publicKey) bot.sendMessage(msg.chat.id, `😔 Sorry, you need to provide accountName & publicKey`)
     else if (accountName && accountName.length !== 12) bot.sendMessage(msg.chat.id, `😔 Sorry, your account name must be 12 characters long, no more, no less.`)
     else if (invalidCharaters.length !== 0) bot.sendMessage(msg.chat.id, `😔 Sorry, the following character(s) are not allowed: \n${invalidCharaters.join('  ')}`)
@@ -130,7 +128,7 @@ bot.on('/new_account', async (msg) => {
                     ? `✅ Account created \n\nSee: https://wax.bloks.io/account/${accountName}`
                     : `✅ Account created`
                 bot.sendMessage(msg.chat.id, message, {webPreview: true})
-            }
+            } else {bot.sendMessage(msg.chat.id, `😔 Sorry, an error occured.`)}
         } else {
             bot.sendMessage(msg.chat.id, `😔 Sorry, you already have created a account.`)
         }
