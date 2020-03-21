@@ -20,6 +20,20 @@ const api = new Api({ rpc, signatureProvider, textDecoder: new TextDecoder(), te
 // #################################################  WAX  ######################################################
 // ##############################################################################################################
 
+const getBlackListedFilePath = () => {
+    const fileName = `blackListedUserIds.json`
+    // need to store it on a persistent volume in production
+    return process.env.NODE_ENV === `production` ? `/storage/waxmeetup/${fileName}` : fileName
+}
+const readBlackList = () => {
+    try {
+        const contents = fs.readFileSync(getBlackListedFilePath())
+        return JSON.parse(contents)
+    } catch (error) {
+        console.error(`Error reading blacklist file: ${error.message}`)
+    }
+}
+
 async function transfer (memo) {
     try {
         await api.transact(
@@ -105,8 +119,8 @@ bot.on('/new_account', async (msg) => {
     }
 
     // Error message
-    if (!config.authorizedChatGroupIds.includes(msg.chat.id) && config.authorizedChatGroupIds.length !== 0) bot.sendMessage(msg.chat.id, `😔 Sorry, you need to be in the @wax_blockchain_meetup group to use this bot.`)
-    else if (!accountName || !publicKey) bot.sendMessage(msg.chat.id, `😔 Sorry, you need to provide accountName & publicKey`)
+    // if (!config.authorizedChatGroupIds.includes(msg.chat.id) && config.authorizedChatGroupIds.length !== 0) bot.sendMessage(msg.chat.id, `😔 Sorry, you need to be in the @wax_blockchain_meetup group to use this bot.`)
+    if (!accountName || !publicKey) bot.sendMessage(msg.chat.id, `😔 Sorry, you need to provide accountName & publicKey`)
     else if (accountName && accountName.length !== 12) bot.sendMessage(msg.chat.id, `😔 Sorry, your account name must be 12 characters long, no more, no less.`)
     else if (invalidCharaters.length !== 0) bot.sendMessage(msg.chat.id, `😔 Sorry, the following character(s) are not allowed: \n${invalidCharaters.join('  ')}`)
     else if (hasDotAtInvalidPos) bot.sendMessage(msg.chat.id, `😔 Sorry, you cannot use dots ( . ) for the first nor the last character of your account name.`)
@@ -116,13 +130,13 @@ bot.on('/new_account', async (msg) => {
     // Create account process
     else {
         // @ts-ignore
-        let blackListedUserIds = require('./blackListedUserIds.json')
+        let blackListedUserIds = readBlackList()
         if (!blackListedUserIds.includes(msg.from.id)) {
             bot.sendMessage(msg.chat.id, "Account creation in progress... ⏳")
             let isCreated = await transfer(accountName + '-' + publicKey)
             if (isCreated) {
                 blackListedUserIds.push(msg.from.id)
-                fs.writeFileSync('./blackListedUserIds.json', JSON.stringify(blackListedUserIds))
+                fs.writeFileSync(getBlackListedFilePath(), JSON.stringify(blackListedUserIds))
                 const message = config.shouldPostLinkToAccountAfterCreation 
                     ? `✅ Account created \n\nSee: https://wax.bloks.io/account/${accountName}`
                     : `✅ Account created`
