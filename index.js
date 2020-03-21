@@ -5,10 +5,7 @@ const ecc = require('eosjs-ecc')
 // @ts-ignore
 const config = require('./config.json')
 
-const bot = new Telebot({
-    token: config.keys.bot,
-    usePlugins: ['shortReply']
-})
+const bot = new Telebot(config.keys.bot)
 
 const { Api, JsonRpc, RpcError } = require('eosjs');
 const { JsSignatureProvider } = require('eosjs/dist/eosjs-jssig');      
@@ -70,6 +67,10 @@ async function checkIfNameIsAvailable (accountName) {
 
 const validAccountNameCharacters = ['.', '1', '2', '3', '4', '5', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 
             'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
+
+bot.on('/groupId', async (msg) => {
+    bot.sendMessage(msg.chat.id, `The ID of this chat group is: ${msg.chat.id}`)
+})
             
 bot.on('/new_account', async (msg) => {
     // Don't accept requests from Telegram bots
@@ -77,6 +78,9 @@ bot.on('/new_account', async (msg) => {
         bot.sendMessage(msg.chat.id, `😔 Sorry, bots are not allowed to create accounts`)
         return
     }
+
+    // Restrict bot usage to specified Telegram groups
+    if (!config.authorizedChatGroupIds.includes(msg.chat.id) && config.authorizedChatGroupIds.length !== 0) return
 
     // Extracting accountName and publicKey from user msg
     let [accountName, publicKey] = msg.text.split(' ').slice(1, 3)
@@ -106,6 +110,7 @@ bot.on('/new_account', async (msg) => {
     
     // Error message
     if (error) {bot.sendMessage(msg.chat.id, `😔 Sorry, an error occured.`)}
+    else if (!config.authorizedChatGroupIds.includes(msg.chat.id)) bot.sendMessage(msg.chat.id, `😔 Sorry, you need to be in one of these groups to use the bot (${!config.authorizedChatGroups.join('  ')})`)
     else if (!accountName || !publicKey) bot.sendMessage(msg.chat.id, `😔 Sorry, you need to provide accountName & publicKey`)
     else if (accountName && accountName.length !== 12) bot.sendMessage(msg.chat.id, `😔 Sorry, your account name must be 12 characters long, no more, no less.`)
     else if (invalidCharaters.length !== 0) bot.sendMessage(msg.chat.id, `😔 Sorry, the following character(s) are not allowed: \n${invalidCharaters.join('  ')}`)
@@ -137,9 +142,10 @@ bot.on(['/help', '/start'], (msg) => {
         
 Account names should be 12 characters long, no more, no less.
 Account names should only contain letters [A-Z], numbers [1-5] 
-Account names can contain optionnal dots . except for the first and last characters.`
+Account names can contain optionnal dots . except for the first and last characters.
+`
 )})
 
-bot.on('text', (msg) => {console.log(msg)})
+bot.on('text', (msg) => {console.log(msg.chat.id, ' - ', msg.from.username, ' - ', msg.text)})
 
 bot.connect()
