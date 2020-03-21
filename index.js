@@ -119,7 +119,7 @@ bot.on('/new_account', async (msg) => {
     }
 
     // Error message
-    // if (!config.authorizedChatGroupIds.includes(msg.chat.id) && config.authorizedChatGroupIds.length !== 0) bot.sendMessage(msg.chat.id, `😔 Sorry, you need to be in the @wax_blockchain_meetup group to use this bot.`)
+    if (!config.authorizedChatGroupIds.includes(msg.chat.id) && config.authorizedChatGroupIds.length !== 0) bot.sendMessage(msg.chat.id, `😔 Sorry, you need to be in the @wax_blockchain_meetup group to use this bot.`)
     if (!accountName || !publicKey) bot.sendMessage(msg.chat.id, `😔 Sorry, you need to provide accountName & publicKey`)
     else if (accountName && accountName.length !== 12) bot.sendMessage(msg.chat.id, `😔 Sorry, your account name must be 12 characters long, no more, no less.`)
     else if (invalidCharaters.length !== 0) bot.sendMessage(msg.chat.id, `😔 Sorry, the following character(s) are not allowed: \n${invalidCharaters.join('  ')}`)

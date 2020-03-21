@@ -8,7 +8,7 @@ const config = {
         "bot": TELEGRAM_BOT_API_KEY,
         "wax": EOSIO_PRIVATE_KEY,
     },
-    "authorizedChatGroupIds": [-1001442837218],
+    "authorizedChatGroupIds": [-1001182060025],
     "waxAccountName": WAX_ACCOUNT_NAME || "waxmeetupbot",
     "waxPermission": WAX_PERMISSION || "active",
     "waxSmartContractName": "signupwaxwax",
