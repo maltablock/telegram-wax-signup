@@ -13,8 +13,8 @@ const config = {
     "waxPermission": WAX_PERMISSION || "active",
     "waxSmartContractName": "signupwaxwax",
     "waxAmount": "1.50000000 WAX",
-    "apiEndpoint": "https://chain.wax.io"
+    "apiEndpoint": "https://chain.wax.io",
+    "shouldPostLinkToAccountAfterCreation": true
 }
-console.log(JSON.stringify(config, null, 2))
 
 module.exports = config
