@@ -46,7 +46,8 @@ async function transfer (memo) {
         )
         return true
     } catch (e) {
-        return e
+        console.log(e)
+        return false
     }
 }
 
@@ -57,7 +58,10 @@ async function checkIfNameIsAvailable (accountName) {
     }
     catch (e) {
         if (e.json && e.json.code === 500) return true
-        else return e
+        else {
+            console.log(e)
+            return false
+        }
     }
 }
 
@@ -88,7 +92,7 @@ bot.on('/new_account', async (msg) => {
     // Checking for name and key validity
     const invalidCharaters = []
     let hasDotAtInvalidPos = false
-    let isAccountNameAvailable = await checkIfNameIsAvailable(accountName)
+    let isAccountNameAvailable = false
     let isPubKeyValid = ecc.isValidPublic(publicKey)
     let error = false
     
@@ -98,12 +102,7 @@ bot.on('/new_account', async (msg) => {
             if ((i === 0 || i === 11) && char === '.') hasDotAtInvalidPos = true
         })
         if (invalidCharaters.length === 0 && !hasDotAtInvalidPos) {
-            const res = await checkIfNameIsAvailable(accountName)
-            if (typeof res !== 'object') isAccountNameAvailable = res
-            else {
-                console.log(res)
-                error = res
-            }
+            isAccountNameAvailable = await checkIfNameIsAvailable(accountName)
         }
     }
     
