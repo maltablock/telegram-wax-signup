@@ -1,9 +1,8 @@
 const fs = require('fs')
 const Telebot = require('telebot')
 const ecc = require('eosjs-ecc')
+const config = require('./config')
 
-// @ts-ignore
-const config = require('./config.json')
 
 const bot = new Telebot(config.keys.bot)
 
@@ -30,7 +29,7 @@ async function transfer (memo) {
                     name: 'transfer',
                     authorization: [{
                         actor: config.waxAccountName,
-                        permission: 'active',
+                        permission: config.waxPermission,
                     }],
                     data: {
                         from: config.waxAccountName,
@@ -46,7 +45,8 @@ async function transfer (memo) {
         )
         return true
     } catch (e) {
-        return e
+        console.error(e)
+        return false
     }
 }
 
@@ -80,7 +80,7 @@ bot.on('/new_account', async (msg) => {
     }
 
     // Restrict bot usage to specified Telegram groups
-    if (!config.authorizedChatGroupIds.includes(msg.chat.id) && config.authorizedChatGroupIds.length !== 0) return
+    // if (!config.authorizedChatGroupIds.includes(msg.chat.id) && config.authorizedChatGroupIds.length !== 0) return
 
     // Extracting accountName and publicKey from user msg
     let [accountName, publicKey] = msg.text.split(' ').slice(1, 3)
@@ -110,7 +110,7 @@ bot.on('/new_account', async (msg) => {
     
     // Error message
     if (error) {bot.sendMessage(msg.chat.id, `😔 Sorry, an error occured.`)}
-    else if (!config.authorizedChatGroupIds.includes(msg.chat.id)) bot.sendMessage(msg.chat.id, `😔 Sorry, you need to be in one of these groups to use the bot (${!config.authorizedChatGroups.join('  ')})`)
+    else if (config.authorizedChatGroupIds.length > 0 && !config.authorizedChatGroupIds.includes(msg.chat.id)) bot.sendMessage(msg.chat.id, `😔 Sorry, you need to be in the @wax_blockchain_meetup group to use this bot.`)
     else if (!accountName || !publicKey) bot.sendMessage(msg.chat.id, `😔 Sorry, you need to provide accountName & publicKey`)
     else if (accountName && accountName.length !== 12) bot.sendMessage(msg.chat.id, `😔 Sorry, your account name must be 12 characters long, no more, no less.`)
     else if (invalidCharaters.length !== 0) bot.sendMessage(msg.chat.id, `😔 Sorry, the following character(s) are not allowed: \n${invalidCharaters.join('  ')}`)
@@ -129,6 +129,8 @@ bot.on('/new_account', async (msg) => {
                 blackListedUserIds.push(msg.from.id)
                 fs.writeFileSync('./blackListedUserIds.json', JSON.stringify(blackListedUserIds))
                 bot.sendMessage(msg.chat.id, `✅ Account created \nhttps://wax.bloks.io/account/${accountName}`)
+            } else {
+                bot.sendMessage(msg.chat.id, `❌ Account created failed.\nPlease contact an admin in the @wax_blockchain_meetup group`)
             }
         } else {
             bot.sendMessage(msg.chat.id, `😔 Sorry, you already have created a account.`)
