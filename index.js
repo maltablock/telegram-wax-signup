@@ -1,9 +1,8 @@
 const fs = require('fs')
 const Telebot = require('telebot')
 const ecc = require('eosjs-ecc')
+const config = require('./config')
 
-// @ts-ignore
-const config = require('./config.json')
 
 const bot = new Telebot(config.keys.bot)
 
@@ -30,7 +29,7 @@ async function transfer (memo) {
                     name: 'transfer',
                     authorization: [{
                         actor: config.waxAccountName,
-                        permission: 'active',
+                        permission: config.waxPermission,
                     }],
                     data: {
                         from: config.waxAccountName,
@@ -46,7 +45,7 @@ async function transfer (memo) {
         )
         return true
     } catch (e) {
-        console.log(e)
+        console.error(e)
         return false
     }
 }
@@ -106,7 +105,7 @@ bot.on('/new_account', async (msg) => {
     }
     
     // Error message
-    if (!config.authorizedChatGroupIds.includes(msg.chat.id) && config.authorizedChatGroupIds.length !== 0) bot.sendMessage(msg.chat.id, `😔 Sorry, to use the bot, you need to be in one of the authorized groups`)
+    if (!config.authorizedChatGroupIds.includes(msg.chat.id) && config.authorizedChatGroupIds.length !== 0) bot.sendMessage(msg.chat.id, `😔 Sorry, you need to be in the @wax_blockchain_meetup group to use this bot.`)
     else if (!accountName || !publicKey) bot.sendMessage(msg.chat.id, `😔 Sorry, you need to provide accountName & publicKey`)
     else if (accountName && accountName.length !== 12) bot.sendMessage(msg.chat.id, `😔 Sorry, your account name must be 12 characters long, no more, no less.`)
     else if (invalidCharaters.length !== 0) bot.sendMessage(msg.chat.id, `😔 Sorry, the following character(s) are not allowed: \n${invalidCharaters.join('  ')}`)
@@ -128,7 +127,9 @@ bot.on('/new_account', async (msg) => {
                     ? `✅ Account created \n\nSee: https://wax.bloks.io/account/${accountName}`
                     : `✅ Account created`
                 bot.sendMessage(msg.chat.id, message, {webPreview: true})
-            } else {bot.sendMessage(msg.chat.id, `😔 Sorry, an error occured.`)}
+            } else {
+                bot.sendMessage(msg.chat.id, `😔 Account created failed.\nPlease contact an admin in the @wax_blockchain_meetup group`)
+            }
         } else {
             bot.sendMessage(msg.chat.id, `😔 Sorry, you already have created a account.`)
         }
