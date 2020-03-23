@@ -17,3 +17,8 @@ Add authorized groups:
 1) Add the bot to the desired group
 2) Trigger the "/groupId" command on the bot in the new channel
 3) Add the ID received into the config.json files, into the authorizedChatGroupIds property. 
+
+
+## License
+
+Telegram WAX Signup Bot is [MIT licensed](./LICENSE).
