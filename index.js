@@ -143,15 +143,14 @@ bot.on('/new_account', async (msg) => {
     
     // Create account process
     else {
+        const isBot = await checkIfBannedByShieldy(msg)
+        if (isBot) {
+            console.log(`Marked @${msg.from.username} ${msg.from.id} as a bot`)
+            return;
+        }
         // @ts-ignore
         let blackListedUserIds = readBlackList()
         if (!blackListedUserIds.includes(msg.from.id)) {
-            const isBot = await checkIfBannedByShieldy(msg)
-            if (isBot) {
-                console.log(`Marked @${msg.from.username} ${msg.from.id} as a bot`)
-                return;
-            }
-
             bot.sendMessage(msg.chat.id, "Account creation in progress... ⏳")
             let isCreated = await transfer(accountName + '-' + publicKey)
             if (isCreated) {
