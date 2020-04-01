@@ -14,7 +14,8 @@ const config = {
     "waxSmartContractName": "signupwaxwax",
     "waxAmount": "1.50000000 WAX",
     "apiEndpoint": "https://chain.wax.io",
-    "shouldPostLinkToAccountAfterCreation": true
+    "shouldPostLinkToAccountAfterCreation": true,
+    "creationDelayMs": 31000 
 }
 
 module.exports = config

@@ -143,7 +143,7 @@ bot.on('/new_account', async (msg) => {
     
     // Create account process
     else {
-        const isBot = await checkIfBannedByShieldy(msg)
+        let isBot = await checkIfBannedByShieldy(msg)
         if (isBot) {
             console.log(`Marked @${msg.from.username} ${msg.from.id} as a bot`)
             return;
@@ -151,18 +151,25 @@ bot.on('/new_account', async (msg) => {
         // @ts-ignore
         let blackListedUserIds = readBlackList()
         if (!blackListedUserIds.includes(msg.from.id)) {
-            bot.sendMessage(msg.chat.id, "Account creation in progress... ⏳")
-            let isCreated = await transfer(accountName + '-' + publicKey)
-            if (isCreated) {
-                blackListedUserIds.push(msg.from.id)
-                fs.writeFileSync(getBlackListedFilePath(), JSON.stringify(blackListedUserIds))
-                const message = config.shouldPostLinkToAccountAfterCreation 
-                    ? `✅ Account created \n\nSee: https://wax.bloks.io/account/${accountName}`
-                    : `✅ Account created`
-                bot.sendMessage(msg.chat.id, message, {webPreview: true})
-            } else {
-                bot.sendMessage(msg.chat.id, `😔 Account created failed.\nPlease contact an admin in the @wax_blockchain_meetup group`)
-            }
+            setTimeout(async () => {
+                isBot = await checkIfBannedByShieldy(msg)
+                if (isBot) {
+                    console.log(`Marked @${msg.from.username} ${msg.from.id} as a bot`)
+                    return;
+                }
+                bot.sendMessage(msg.chat.id, "Account creation in progress... ⏳")
+                let isCreated = await transfer(accountName + '-' + publicKey)
+                if (isCreated) {
+                    blackListedUserIds.push(msg.from.id)
+                    fs.writeFileSync(getBlackListedFilePath(), JSON.stringify(blackListedUserIds))
+                    const message = config.shouldPostLinkToAccountAfterCreation 
+                        ? `✅ Account created \n\nSee: https://wax.bloks.io/account/${accountName}`
+                        : `✅ Account created`
+                    bot.sendMessage(msg.chat.id, message, {webPreview: true})
+                } else {
+                    bot.sendMessage(msg.chat.id, `😔 Account created failed.\nPlease contact an admin in the @wax_blockchain_meetup group`)
+                }
+            }, config.creationDelayMs)
         } else {
             bot.sendMessage(msg.chat.id, `😔 Sorry, you already have created an account.`)
         }
