@@ -78,6 +78,20 @@ async function checkIfNameIsAvailable (accountName) {
     }
 }
 
+async function checkIfBannedByShieldy(msg) {
+    // wait two seconds for shieldy to ban
+    await new Promise(res => setTimeout(res, 2000))
+    const chatGroupId = config.authorizedChatGroupIds[0]
+    if(!chatGroupId) {
+        console.error(`checkIfBannedByShieldy: No chat group ID defined in config.json`)
+        return true;
+    }
+    const chatMember = await bot.getChatMember(chatGroupId, msg.from.id);
+    console.log(`chatMember`, chatMember.status)
+    const isBanned = chatMember.status === `left` || chatMember.status === `kicked` || chatMember.status === `restricted`
+    return isBanned
+}
+
 // ##############################################################################################################
 // #################################################  BOT  ######################################################
 // ##############################################################################################################
@@ -132,6 +146,12 @@ bot.on('/new_account', async (msg) => {
         // @ts-ignore
         let blackListedUserIds = readBlackList()
         if (!blackListedUserIds.includes(msg.from.id)) {
+            const isBot = await checkIfBannedByShieldy(msg)
+            if (isBot) {
+                console.log(`Marked @${msg.from.username} ${msg.from.id} as a bot`)
+                return;
+            }
+
             bot.sendMessage(msg.chat.id, "Account creation in progress... ⏳")
             let isCreated = await transfer(accountName + '-' + publicKey)
             if (isCreated) {
