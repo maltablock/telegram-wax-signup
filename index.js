@@ -162,6 +162,6 @@ Account names can contain optionnal dots . except for the first and last charact
 `
 )})
 
-bot.on('text', (msg) => {console.log(`${msg.chat.id}' - ' @${msg.from.username} (${msg.from.id} ${msg.from.first_name})': ' ${msg.text}`)})
+bot.on('text', (msg) => {console.log(`${msg.chat.id} - @${msg.from.username} (${msg.from.id} ${msg.from.first_name}): ${msg.text}`)})
 
 bot.connect()
