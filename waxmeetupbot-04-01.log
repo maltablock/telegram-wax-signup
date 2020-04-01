@@ -1,0 +1,193 @@
+[36m2020-03-23T08:57:30.842335714Z app[web.1]:[0m 
+[36m2020-03-23T08:57:30.842411954Z app[web.1]:[0m > telegram-wax-signup@1.0.0 start /app
+[36m2020-03-23T08:57:30.842422187Z app[web.1]:[0m > node index.js
+[36m2020-03-23T08:57:30.842428173Z app[web.1]:[0m 
+[36m2020-03-23T08:57:31.389367413Z app[web.1]:[0m [bot.plugin] loaded 'regExpMessage' plugin
+[36m2020-03-23T08:57:31.392011231Z app[web.1]:[0m [bot.plugin] loaded 'shortReply' plugin
+[36m2020-03-23T08:57:31.964263211Z app[web.1]:[0m [bot.info] bot started
+[36m2020-03-23T08:58:50.154280491Z app[web.1]:[0m 531086315 ' - ' 'cmichelio' ' - ' '/groupId'
+[36m2020-03-30T12:43:31.776160606Z app[web.1]:[0m [bot.error.update] { ok: false,
+[36m2020-03-30T12:43:31.780159083Z app[web.1]:[0m   error_code: 500,
+[36m2020-03-30T12:43:31.780171727Z app[web.1]:[0m   description: 'Internal server error: restart' }
+[36m2020-03-30T12:43:31.780197390Z app[web.1]:[0m [bot.info.update] reconnecting in 5 seconds...
+[36m2020-03-30T12:43:38.080164112Z app[web.1]:[0m [bot.error.update] { ok: false, error_code: 502, description: 'Bad Gateway' }
+[36m2020-03-30T12:43:38.080444552Z app[web.1]:[0m [bot.info.update] reconnecting in 5 seconds...
+[36m2020-03-30T12:43:49.148090940Z app[web.1]:[0m [bot.info.update] reconnected after 17.385 seconds
+[36m2020-03-30T15:32:56.788714346Z app[web.1]:[0m [bot.info.update] reconnecting in 5 seconds...
+[36m2020-03-30T15:32:56.788964434Z app[web.1]:[0m [bot.error.update] { ok: false,
+[36m2020-03-30T15:32:56.788988175Z app[web.1]:[0m   error_code: 500,
+[36m2020-03-30T15:32:56.788993410Z app[web.1]:[0m   description: 'Internal server error: restart' }
+[36m2020-03-30T15:33:13.836807556Z app[web.1]:[0m [bot.info.update] reconnected after 17.049 seconds
+[36m2020-03-31T01:52:26.031128005Z app[web.1]:[0m [bot.info.update] reconnecting in 5 seconds...
+[36m2020-03-31T01:52:26.031245519Z app[web.1]:[0m [bot.error.update] { ok: false,
+[36m2020-03-31T01:52:26.031259770Z app[web.1]:[0m   error_code: 500,
+[36m2020-03-31T01:52:26.031284434Z app[web.1]:[0m   description: 'Internal server error: restart' }
+[36m2020-03-31T01:52:40.823235603Z app[web.1]:[0m [bot.info.update] reconnected after 14.792 seconds
+[36m2020-03-31T16:50:06.407784908Z app[web.1]:[0m -1001182060025 ' - ' 'michaelgucci' ' - ' '/new_account waxmeetup222 EOS6hQ6v8vut1V2giQCYha7J225GCzFJtF3o7fy8JYuN7k6fG4n23'
+[36m2020-03-31T17:26:18.395813720Z app[web.1]:[0m 397184732 ' - ' 'linsey20155' ' - ' '/start'
+[36m2020-03-31T17:26:38.957786652Z app[web.1]:[0m 488108819 ' - ' 'bingdarwin' ' - ' '/start'
+[36m2020-03-31T17:28:21.379849635Z app[web.1]:[0m 488108819 ' - ' 'bingdarwin' ' - ' 'awsgkjasda11'
+[36m2020-03-31T17:28:27.602707778Z app[web.1]:[0m 488108819 ' - ' 'bingdarwin' ' - ' '/new_account'
+[36m2020-03-31T19:51:09.560363159Z app[web.1]:[0m 591253304 ' - ' 'ihavespoken' ' - ' '/start'
+[36m2020-03-31T19:51:15.833880552Z app[web.1]:[0m 591253304 ' - ' 'ihavespoken' ' - ' '/new_account'
+[36m2020-03-31T19:51:45.773842967Z app[web.1]:[0m 591253304 ' - ' 'ihavespoken' ' - ' '/new_account'
+[36m2020-03-31T19:52:09.888956229Z app[web.1]:[0m 591253304 ' - ' 'ihavespoken' ' - ' '/new_account testwaxx1111'
+[36m2020-03-31T19:53:18.659324720Z app[web.1]:[0m 976456589 ' - ' 'sergand0' ' - ' '/start'
+[36m2020-03-31T19:55:07.595707313Z app[web.1]:[0m 976456589 ' - ' 'sergand0' ' - ' '/new_account waxyyyyyyyyy EOS8RxZd4E3t5PZr9Y4eoGjLY9TmVAhAZkNsQLJPZnJ1E9gHggiZQ'
+[36m2020-03-31T19:55:19.836989489Z app[web.1]:[0m -1001182060025 ' - ' 'sergand0' ' - ' '/new_account waxyyyyyyyyy EOS8RxZd4E3t5PZr9Y4eoGjLY9TmVAhAZkNsQLJPZnJ1E9gHggiZQ'
+[36m2020-03-31T20:05:49.138734702Z app[web.1]:[0m -1001182060025 ' - ' 'kingopr' ' - ' '/new_account bitwaxxcoinn EOS8A8bThx8fxkWggX7VnU4UMF3pskFsaTqooQQzymH4MZUY9nxwW'
+[36m2020-03-31T20:09:10.138541430Z app[web.1]:[0m -1001182060025 ' - ' 'lovgilr' ' - ' '/new_account inoueshiki12 EOS6qEHPDguV5kqSZrLbsMRvB4C8UPbAxym1QkZFH1GrUf46z3Mrg'
+[36m2020-03-31T20:11:00.189754415Z app[web.1]:[0m -1001182060025 ' - ' 'kriera' ' - ' '/new_account printunlimit EOS7FNBA1q3qagZWfgEU2Pt3gNnNjsxEfPA6QpACi5vaGspXggVqK'
+[36m2020-03-31T20:12:23.593857934Z app[web.1]:[0m -1001182060025 ' - ' 'paharaman' ' - ' '/new_account mywaxwallet5 EOS6V6uR1jF81J97rEPczkDN67irFiZjMfsk9WzQ4bb9sqhjctbMm'
+[36m2020-03-31T20:13:40.542033639Z app[web.1]:[0m -1001182060025 ' - ' 'marinka1139' ' - ' '/new_account yellowflower EOS4xrmzyeVCtgxi8bSWggaGVZnsBX4tMzmTu3egwNSLdRP7rBZyG'
+[36m2020-03-31T20:14:36.238696293Z app[web.1]:[0m -1001182060025 ' - ' undefined ' - ' '/new_account waxmeetup222 EOS88sofcDg9DKDLap54S4QyNDjEYdnd9as2Yt53onMD5WPMVv3ab'
+[36m2020-03-31T20:15:05.738982925Z app[web.1]:[0m -1001182060025 ' - ' 'lovvehuobi' ' - ' '/new_account huobi1huobi2 EOS8FDE2D7bMxRDzw8UnvMavU61ko7qW4HWBaao8i6rguiry4xvkh'
+[36m2020-03-31T20:15:49.683328890Z app[web.1]:[0m -1001182060025 ' - ' 'arnolsrr' ' - ' '/new_account flyyflyyflyy EOS7Jg5APvCPwbeVfrjbErhCHmY43TMokX2DyKKTLruBUMcvkWT4t'
+[36m2020-03-31T20:16:58.320838756Z app[web.1]:[0m -1001182060025 ' - ' 'mihalo123' ' - ' '/new_account 111111111111 EOS8eC3KdwTHeX2wnsSjaKMvV9PaJZ3QYqhAonScTj5kUG1dqPfqf'
+[36m2020-03-31T20:17:22.327361888Z app[web.1]:[0m -1001182060025 ' - ' 'mihalo123' ' - ' '/new_account 111111111112 EOS8eC3KdwTHeX2wnsSjaKMvV9PaJZ3QYqhAonScTj5kUG1dqPfqf'
+[36m2020-03-31T20:17:52.393626586Z app[web.1]:[0m -1001182060025 ' - ' 'mihalo123' ' - ' '/new_account 111111111113 EOS8eC3KdwTHeX2wnsSjaKMvV9PaJZ3QYqhAonScTj5kUG1dqPfqf'
+[36m2020-03-31T20:20:59.042921464Z app[web.1]:[0m -1001182060025 ' - ' 'nikcho2' ' - ' '/new_account eosioeosioio EOS6RWNdjocDwKoDfqy66hv76homH5pQNy5FWQbTaYE2c5U57f8Vp'
+[36m2020-03-31T20:24:22.495026957Z app[web.1]:[0m -1001182060025 ' - ' 'woodora86' ' - ' '/new_account doraexplorer EOS5XBWhH52HfsKQabEznW2r9yP1M6gatkTKBrxQeUQLB48uDY89v'
+[36m2020-03-31T20:26:07.751489917Z app[web.1]:[0m -1001182060025 ' - ' 'wolffst' ' - ' '/new_account heroicknight EOS6wBKEN55NUruqXPf98fmq41iU3BK8htGsdnaudzC2KSKqqqY9E'
+[36m2020-03-31T20:31:28.210924873Z app[web.1]:[0m -1001182060025 ' - ' 'francescaCaia' ' - ' '/new_account mysticdragon EOS8VVCdjqkDS5kMkzx2zj46rAFtAujNYpN9n2V9RC7VMy3qbPPqy'
+[36m2020-03-31T20:33:30.914419115Z app[web.1]:[0m -1001182060025 ' - ' undefined ' - ' '/new_account looveeloovee EOS6PFeQ6TAuyq7tvTjRtRYoDLcJ9d4v9QtSN5vamLVxhARCW7zfi'
+[36m2020-03-31T21:00:40.984627798Z app[web.1]:[0m 488108819 ' - ' 'bingdarwin' ' - ' '/new_account'
+[36m2020-03-31T22:21:46.738710203Z app[web.1]:[0m 895670214 ' - ' 'mikeeeeez' ' - ' '/start'
+[36m2020-04-01T00:12:34.669387496Z app[web.1]:[0m -1001182060025 ' - ' 'michaelgucci' ' - ' '/new_account'
+[36m2020-04-01T00:13:00.926764427Z app[web.1]:[0m -1001182060025 ' - ' 'michaelgucci' ' - ' '/new_account waxmeetup233 EOS88sofcDg9DKDLap54S4QyNDjEYdnd9as2Yt53onMD5WPMVv3ab'
+[36m2020-04-01T00:13:54.387267416Z app[web.1]:[0m -1001182060025 ' - ' 'michaelgucci' ' - ' '@everyone @waxmeetupbot is working again - we had to disable that for a short while as we were attacked by bots. I hope Shieldy will prevent that now!'
+[36m2020-04-01T00:14:10.419047317Z app[web.1]:[0m -1001182060025 ' - ' 'michaelgucci' ' - ' 'Please let me now if there are any issues.'
+[36m2020-04-01T00:14:25.680565347Z app[web.1]:[0m -1001182060025 ' - ' 'michaelgucci' ' - ' 'Please try again now!'
+[36m2020-04-01T00:15:02.749055834Z app[web.1]:[0m -1001182060025 ' - ' 'bingdarwin' ' - ' 'ok, thanks'
+[36m2020-04-01T00:16:27.895486720Z app[web.1]:[0m -1001182060025 ' - ' 'Yougggll' ' - ' '/new_account 511111111114 EOS7vGQRjbobi4P1HNy8hyDDX8a4ZEF4kaSWMTPR4dNQZUbdXPmps'
+[36m2020-04-01T00:16:59.592558708Z app[web.1]:[0m -1001182060025 ' - ' 'bingdarwin' ' - ' '/new_account  wadwafgdgtea EOS8DxtLeijMvY3PtWKtqt1wbktUxZJiUy35eTHRTDTbQzYEgceTM'
+[36m2020-04-01T00:17:47.426938215Z app[web.1]:[0m -1001182060025 ' - ' 'bingdarwin' ' - ' '/new_account  wadwafgdgteag EOS8DxtLeijMvY3PtWKtqt1wbktUxZJiUy35eTHRTDTbQzYEgceTM'
+[36m2020-04-01T00:18:40.432997683Z app[web.1]:[0m -1001182060025 ' - ' 'loanpool' ' - ' '8'
+[36m2020-04-01T00:18:53.416027903Z app[web.1]:[0m -1001182060025 ' - ' 'loanpool' ' - ' '/new_account ttttyyyytttt EOS6d93HeGnt8QwjE7KS5TH3gojkjaAunonA8h7zZDf9cZb4J2A3R'
+[36m2020-04-01T00:19:34.207448076Z app[web.1]:[0m -1001182060025 ' - ' 'bingdarwin' ' - ' '/new_account  gggghhhhgggg EOS8DxtLeijMvY3PtWKtqt1wbktUxZJiUy35eTHRTDTbQzYEgceTM'
+[36m2020-04-01T00:20:10.257529141Z app[web.1]:[0m -1001182060025 ' - ' 'PorcoDioSferaFaSchifo' ' - ' 's'
+[36m2020-04-01T00:20:24.831275909Z app[web.1]:[0m -1001182060025 ' - ' 'PorcoDioSferaFaSchifo' ' - ' '/new_account xyxyxyxyxyxy EOS5AfZTg27bqKXHjkq9UQArCdQm1TEhQaTvHxHeUqL8CXo59TucA'
+[36m2020-04-01T00:20:41.377308659Z app[web.1]:[0m -1001182060025 ' - ' 'bingdarwin' ' - ' '/new_account hhhhhhhhjjjj EOS8DxtLeijMvY3PtWKtqt1wbktUxZJiUy35eTHRTDTbQzYEgceTM'
+[36m2020-04-01T00:20:42.566294909Z app[web.1]:[0m { Error: billed CPU time (3741 us) is greater than the maximum billable CPU time for the transaction (1595 us)
+[36m2020-04-01T00:20:42.566329915Z app[web.1]:[0m     at new RpcError (/app/node_modules/eosjs/dist/eosjs-rpcerror.js:26:28)
+[36m2020-04-01T00:20:42.566336200Z app[web.1]:[0m     at JsonRpc.<anonymous> (/app/node_modules/eosjs/dist/eosjs-jsonrpc.js:118:35)
+[36m2020-04-01T00:20:42.566349499Z app[web.1]:[0m     at step (/app/node_modules/eosjs/dist/eosjs-jsonrpc.js:36:23)
+[36m2020-04-01T00:20:42.566353719Z app[web.1]:[0m     at Object.next (/app/node_modules/eosjs/dist/eosjs-jsonrpc.js:17:53)
+[36m2020-04-01T00:20:42.566357939Z app[web.1]:[0m     at fulfilled (/app/node_modules/eosjs/dist/eosjs-jsonrpc.js:8:58)
+[36m2020-04-01T00:20:42.566361994Z app[web.1]:[0m     at process._tickCallback (internal/process/next_tick.js:68:7)
+[36m2020-04-01T00:20:42.566366010Z app[web.1]:[0m   json:
+[36m2020-04-01T00:20:42.566370021Z app[web.1]:[0m    { code: 500,
+[36m2020-04-01T00:20:42.566373922Z app[web.1]:[0m      message: 'Internal Service Error',
+[36m2020-04-01T00:20:42.566377728Z app[web.1]:[0m      error:
+[36m2020-04-01T00:20:42.566381431Z app[web.1]:[0m       { code: 3080004,
+[36m2020-04-01T00:20:42.566385299Z app[web.1]:[0m         name: 'tx_cpu_usage_exceeded',
+[36m2020-04-01T00:20:42.566389117Z app[web.1]:[0m         what:
+[36m2020-04-01T00:20:42.566392908Z app[web.1]:[0m          'Transaction exceeded the current CPU usage limit imposed on the transaction',
+[36m2020-04-01T00:20:42.566396970Z app[web.1]:[0m         details: [Array] } } }
+[36m2020-04-01T00:20:55.918965644Z app[web.1]:[0m -1001182060025 ' - ' 'PorcoDioSferaFaSchifo' ' - ' '11'
+[36m2020-04-01T00:21:18.840063402Z app[web.1]:[0m -1001182060025 ' - ' 'bingdarwin' ' - ' '/new_account'
+[36m2020-04-01T00:22:31.149765302Z app[web.1]:[0m -1001182060025 ' - ' undefined ' - ' '/new_account xxxichigoxxx EOS8j7bxh5DFavRmzJR5kh8aoGbcrVs7zEksq7T2H4MNkRwfb3QJw'
+[36m2020-04-01T00:22:32.779001216Z app[web.1]:[0m { Error: the transaction was unable to complete by deadline, but it is possible it could have succeeded if it were allowed to run to completion
+[36m2020-04-01T00:22:32.779039619Z app[web.1]:[0m     at new RpcError (/app/node_modules/eosjs/dist/eosjs-rpcerror.js:26:28)
+[36m2020-04-01T00:22:32.779047505Z app[web.1]:[0m     at JsonRpc.<anonymous> (/app/node_modules/eosjs/dist/eosjs-jsonrpc.js:118:35)
+[36m2020-04-01T00:22:32.779052545Z app[web.1]:[0m     at step (/app/node_modules/eosjs/dist/eosjs-jsonrpc.js:36:23)
+[36m2020-04-01T00:22:32.779056829Z app[web.1]:[0m     at Object.next (/app/node_modules/eosjs/dist/eosjs-jsonrpc.js:17:53)
+[36m2020-04-01T00:22:32.779061069Z app[web.1]:[0m     at fulfilled (/app/node_modules/eosjs/dist/eosjs-jsonrpc.js:8:58)
+[36m2020-04-01T00:22:32.779065229Z app[web.1]:[0m     at process._tickCallback (internal/process/next_tick.js:68:7)
+[36m2020-04-01T00:22:32.779069293Z app[web.1]:[0m   json:
+[36m2020-04-01T00:22:32.779073101Z app[web.1]:[0m    { code: 500,
+[36m2020-04-01T00:22:32.779076988Z app[web.1]:[0m      message: 'Internal Service Error',
+[36m2020-04-01T00:22:32.779080925Z app[web.1]:[0m      error:
+[36m2020-04-01T00:22:32.779084825Z app[web.1]:[0m       { code: 3081001,
+[36m2020-04-01T00:22:32.779089958Z app[web.1]:[0m         name: 'leeway_deadline_exception',
+[36m2020-04-01T00:22:32.779104264Z app[web.1]:[0m         what:
+[36m2020-04-01T00:22:32.779113288Z app[web.1]:[0m          'Transaction reached the deadline set due to leeway on account CPU limits',
+[36m2020-04-01T00:22:32.779120299Z app[web.1]:[0m         details: [Array] } } }
+[36m2020-04-01T00:22:46.620844367Z app[web.1]:[0m -1001182060025 ' - ' undefined ' - ' '7'
+[36m2020-04-01T00:23:08.220706330Z app[web.1]:[0m -1001182060025 ' - ' undefined ' - ' '/new_account xxxichigoxxx EOS8j7bxh5DFavRmzJR5kh8aoGbcrVs7zEksq7T2H4MNkRwfb3QJw'
+[36m2020-04-01T00:23:10.023594024Z app[web.1]:[0m { Error: the transaction was unable to complete by deadline, but it is possible it could have succeeded if it were allowed to run to completion
+[36m2020-04-01T00:23:10.023625657Z app[web.1]:[0m     at new RpcError (/app/node_modules/eosjs/dist/eosjs-rpcerror.js:26:28)
+[36m2020-04-01T00:23:10.023630859Z app[web.1]:[0m     at JsonRpc.<anonymous> (/app/node_modules/eosjs/dist/eosjs-jsonrpc.js:118:35)
+[36m2020-04-01T00:23:10.023635587Z app[web.1]:[0m     at step (/app/node_modules/eosjs/dist/eosjs-jsonrpc.js:36:23)
+[36m2020-04-01T00:23:10.023639814Z app[web.1]:[0m     at Object.next (/app/node_modules/eosjs/dist/eosjs-jsonrpc.js:17:53)
+[36m2020-04-01T00:23:10.023643871Z app[web.1]:[0m     at fulfilled (/app/node_modules/eosjs/dist/eosjs-jsonrpc.js:8:58)
+[36m2020-04-01T00:23:10.023647802Z app[web.1]:[0m     at process._tickCallback (internal/process/next_tick.js:68:7)
+[36m2020-04-01T00:23:10.023651708Z app[web.1]:[0m   json:
+[36m2020-04-01T00:23:10.023655611Z app[web.1]:[0m    { code: 500,
+[36m2020-04-01T00:23:10.023659493Z app[web.1]:[0m      message: 'Internal Service Error',
+[36m2020-04-01T00:23:10.023663271Z app[web.1]:[0m      error:
+[36m2020-04-01T00:23:10.023667094Z app[web.1]:[0m       { code: 3081001,
+[36m2020-04-01T00:23:10.023670923Z app[web.1]:[0m         name: 'leeway_deadline_exception',
+[36m2020-04-01T00:23:10.023694951Z app[web.1]:[0m         what:
+[36m2020-04-01T00:23:10.023698822Z app[web.1]:[0m          'Transaction reached the deadline set due to leeway on account CPU limits',
+[36m2020-04-01T00:23:10.023702310Z app[web.1]:[0m         details: [Array] } } }
+[36m2020-04-01T00:23:43.013590295Z app[web.1]:[0m -1001182060025 ' - ' 'bingdarwin' ' - ' '/new_account waxmeetup234 EOS6eQWgoJfneSPqtv17HVMWquWPyR9nnkyYmAMRUuwqLGySjfUpE'
+[36m2020-04-01T00:23:44.259166748Z app[web.1]:[0m { Error: billed CPU time (3177 us) is greater than the maximum billable CPU time for the transaction (1668 us)
+[36m2020-04-01T00:23:44.259199679Z app[web.1]:[0m     at new RpcError (/app/node_modules/eosjs/dist/eosjs-rpcerror.js:26:28)
+[36m2020-04-01T00:23:44.259205095Z app[web.1]:[0m     at JsonRpc.<anonymous> (/app/node_modules/eosjs/dist/eosjs-jsonrpc.js:118:35)
+[36m2020-04-01T00:23:44.259209757Z app[web.1]:[0m     at step (/app/node_modules/eosjs/dist/eosjs-jsonrpc.js:36:23)
+[36m2020-04-01T00:23:44.259213740Z app[web.1]:[0m     at Object.next (/app/node_modules/eosjs/dist/eosjs-jsonrpc.js:17:53)
+[36m2020-04-01T00:23:44.259218010Z app[web.1]:[0m     at fulfilled (/app/node_modules/eosjs/dist/eosjs-jsonrpc.js:8:58)
+[36m2020-04-01T00:23:44.259221933Z app[web.1]:[0m     at process._tickCallback (internal/process/next_tick.js:68:7)
+[36m2020-04-01T00:23:44.259225940Z app[web.1]:[0m   json:
+[36m2020-04-01T00:23:44.259229675Z app[web.1]:[0m    { code: 500,
+[36m2020-04-01T00:23:44.259233556Z app[web.1]:[0m      message: 'Internal Service Error',
+[36m2020-04-01T00:23:44.259237298Z app[web.1]:[0m      error:
+[36m2020-04-01T00:23:44.259241112Z app[web.1]:[0m       { code: 3080004,
+[36m2020-04-01T00:23:44.259245349Z app[web.1]:[0m         name: 'tx_cpu_usage_exceeded',
+[36m2020-04-01T00:23:44.259249195Z app[web.1]:[0m         what:
+[36m2020-04-01T00:23:44.259253068Z app[web.1]:[0m          'Transaction exceeded the current CPU usage limit imposed on the transaction',
+[36m2020-04-01T00:23:44.259257129Z app[web.1]:[0m         details: [Array] } } }
+[36m2020-04-01T00:26:51.872559900Z app[web.1]:[0m -1001182060025 ' - ' 'bingdarwin' ' - ' '/new_account waxsss111234 EOS8DxtLeijMvY3PtWKtqt1wbktUxZJiUy35eTHRTDTbQzYEgceTM'
+[36m2020-04-01T00:26:54.231474838Z app[web.1]:[0m { Error: the transaction was unable to complete by deadline, but it is possible it could have succeeded if it were allowed to run to completion
+[36m2020-04-01T00:26:54.231518210Z app[web.1]:[0m     at new RpcError (/app/node_modules/eosjs/dist/eosjs-rpcerror.js:26:28)
+[36m2020-04-01T00:26:54.231523629Z app[web.1]:[0m     at JsonRpc.<anonymous> (/app/node_modules/eosjs/dist/eosjs-jsonrpc.js:118:35)
+[36m2020-04-01T00:26:54.231528423Z app[web.1]:[0m     at step (/app/node_modules/eosjs/dist/eosjs-jsonrpc.js:36:23)
+[36m2020-04-01T00:26:54.231532722Z app[web.1]:[0m     at Object.next (/app/node_modules/eosjs/dist/eosjs-jsonrpc.js:17:53)
+[36m2020-04-01T00:26:54.231536686Z app[web.1]:[0m     at fulfilled (/app/node_modules/eosjs/dist/eosjs-jsonrpc.js:8:58)
+[36m2020-04-01T00:26:54.231540784Z app[web.1]:[0m     at process._tickCallback (internal/process/next_tick.js:68:7)
+[36m2020-04-01T00:26:54.231544664Z app[web.1]:[0m   json:
+[36m2020-04-01T00:26:54.231548562Z app[web.1]:[0m    { code: 500,
+[36m2020-04-01T00:26:54.231552398Z app[web.1]:[0m      message: 'Internal Service Error',
+[36m2020-04-01T00:26:54.231575029Z app[web.1]:[0m      error:
+[36m2020-04-01T00:26:54.231578893Z app[web.1]:[0m       { code: 3081001,
+[36m2020-04-01T00:26:54.231582434Z app[web.1]:[0m         name: 'leeway_deadline_exception',
+[36m2020-04-01T00:26:54.231594917Z app[web.1]:[0m         what:
+[36m2020-04-01T00:26:54.231598544Z app[web.1]:[0m          'Transaction reached the deadline set due to leeway on account CPU limits',
+[36m2020-04-01T00:26:54.231602032Z app[web.1]:[0m         details: [Array] } } }
+[36m2020-04-01T01:11:26.970755422Z app[web.1]:[0m 488108819 ' - ' 'bingdarwin' ' - ' '/new_account fdgfhjlasdf EOS8DxtLeijMvY3PtWKtqt1wbktUxZJiUy35eTHRTDTbQzYEgceTM'
+[36m2020-04-01T01:11:40.821051438Z app[web.1]:[0m -1001182060025 ' - ' 'bingdarwin' ' - ' '/new_account fdgfhjlasdf EOS8DxtLeijMvY3PtWKtqt1wbktUxZJiUy35eTHRTDTbQzYEgceTM'
+[36m2020-04-01T01:11:59.668302804Z app[web.1]:[0m -1001182060025 ' - ' 'bingdarwin' ' - ' '/new_account fdgfhjlasdfs EOS8DxtLeijMvY3PtWKtqt1wbktUxZJiUy35eTHRTDTbQzYEgceTM'
+[36m2020-04-01T01:12:00.853097804Z app[web.1]:[0m { Error: the transaction was unable to complete by deadline, but it is possible it could have succeeded if it were allowed to run to completion
+[36m2020-04-01T01:12:00.853144687Z app[web.1]:[0m     at new RpcError (/app/node_modules/eosjs/dist/eosjs-rpcerror.js:26:28)
+[36m2020-04-01T01:12:00.853153748Z app[web.1]:[0m     at JsonRpc.<anonymous> (/app/node_modules/eosjs/dist/eosjs-jsonrpc.js:118:35)
+[36m2020-04-01T01:12:00.853161018Z app[web.1]:[0m     at step (/app/node_modules/eosjs/dist/eosjs-jsonrpc.js:36:23)
+[36m2020-04-01T01:12:00.853167029Z app[web.1]:[0m     at Object.next (/app/node_modules/eosjs/dist/eosjs-jsonrpc.js:17:53)
+[36m2020-04-01T01:12:00.853173349Z app[web.1]:[0m     at fulfilled (/app/node_modules/eosjs/dist/eosjs-jsonrpc.js:8:58)
+[36m2020-04-01T01:12:00.853179880Z app[web.1]:[0m     at process._tickCallback (internal/process/next_tick.js:68:7)
+[36m2020-04-01T01:12:00.853186480Z app[web.1]:[0m   json:
+[36m2020-04-01T01:12:00.853192136Z app[web.1]:[0m    { code: 500,
+[36m2020-04-01T01:12:00.853198330Z app[web.1]:[0m      message: 'Internal Service Error',
+[36m2020-04-01T01:12:00.853204437Z app[web.1]:[0m      error:
+[36m2020-04-01T01:12:00.853210717Z app[web.1]:[0m       { code: 3081001,
+[36m2020-04-01T01:12:00.853216803Z app[web.1]:[0m         name: 'leeway_deadline_exception',
+[36m2020-04-01T01:12:00.853223232Z app[web.1]:[0m         what:
+[36m2020-04-01T01:12:00.853228778Z app[web.1]:[0m          'Transaction reached the deadline set due to leeway on account CPU limits',
+[36m2020-04-01T01:12:00.853234939Z app[web.1]:[0m         details: [Array] } } }
+[36m2020-04-01T01:12:24.331455348Z app[web.1]:[0m -1001182060025 ' - ' undefined ' - ' '/new_account xxxichigoxxx EOS8j7bxh5DFavRmzJR5kh8aoGbcrVs7zEksq7T2H4MNkRwfb3QJw'
+[36m2020-04-01T01:12:25.501099520Z app[web.1]:[0m { Error: billed CPU time (3813 us) is greater than the maximum billable CPU time for the transaction (2832 us)
+[36m2020-04-01T01:12:25.501131618Z app[web.1]:[0m     at new RpcError (/app/node_modules/eosjs/dist/eosjs-rpcerror.js:26:28)
+[36m2020-04-01T01:12:25.501137227Z app[web.1]:[0m     at JsonRpc.<anonymous> (/app/node_modules/eosjs/dist/eosjs-jsonrpc.js:118:35)
+[36m2020-04-01T01:12:25.501142276Z app[web.1]:[0m     at step (/app/node_modules/eosjs/dist/eosjs-jsonrpc.js:36:23)
+[36m2020-04-01T01:12:25.501146536Z app[web.1]:[0m     at Object.next (/app/node_modules/eosjs/dist/eosjs-jsonrpc.js:17:53)
+[36m2020-04-01T01:12:25.501167744Z app[web.1]:[0m     at fulfilled (/app/node_modules/eosjs/dist/eosjs-jsonrpc.js:8:58)
+[36m2020-04-01T01:12:25.501171536Z app[web.1]:[0m     at process._tickCallback (internal/process/next_tick.js:68:7)
+[36m2020-04-01T01:12:25.501175069Z app[web.1]:[0m   json:
+[36m2020-04-01T01:12:25.501178579Z app[web.1]:[0m    { code: 500,
+[36m2020-04-01T01:12:25.501182216Z app[web.1]:[0m      message: 'Internal Service Error',
+[36m2020-04-01T01:12:25.501185669Z app[web.1]:[0m      error:
+[36m2020-04-01T01:12:25.501189133Z app[web.1]:[0m       { code: 3080004,
+[36m2020-04-01T01:12:25.501192528Z app[web.1]:[0m         name: 'tx_cpu_usage_exceeded',
+[36m2020-04-01T01:12:25.501196050Z app[web.1]:[0m         what:
+[36m2020-04-01T01:12:25.501199984Z app[web.1]:[0m          'Transaction exceeded the current CPU usage limit imposed on the transaction',
+[36m2020-04-01T01:12:25.501203605Z app[web.1]:[0m         details: [Array] } } }
