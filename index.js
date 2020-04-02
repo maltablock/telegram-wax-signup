@@ -79,8 +79,6 @@ async function checkIfNameIsAvailable (accountName) {
 }
 
 async function checkIfBannedByShieldy(msg) {
-    // wait two seconds for shieldy to ban
-    await new Promise(res => setTimeout(res, 6000))
     const chatGroupId = config.authorizedChatGroupIds[0]
     if(!chatGroupId) {
         console.error(`checkIfBannedByShieldy: No chat group ID defined in config.json`)
