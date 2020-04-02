@@ -15,7 +15,7 @@ const config = {
     "waxAmount": "1.50000000 WAX",
     "apiEndpoint": "https://chain.wax.io",
     "shouldPostLinkToAccountAfterCreation": true,
-    "creationDelayMs": 31000 
+    "newUserDelayMs": 180000 
 }
 
 module.exports = config

@@ -3,7 +3,6 @@ const Telebot = require('telebot')
 const ecc = require('eosjs-ecc')
 const config = require('./config')
 
-
 const bot = new Telebot(config.keys.bot)
 
 const { Api, JsonRpc, RpcError } = require('eosjs');
@@ -90,6 +89,15 @@ async function checkIfBannedByShieldy(msg) {
     return isBanned
 }
 
+function checkIfJoinedTooRecently(msg) {
+    if (Object.keys(newUsers).includes(msg.from.username)) {
+        if ((Date.now() - newUsers[msg.from.username] < config.newUserDelayMs)) {
+            return true
+        } 
+    } 
+    return false     
+}
+
 // ##############################################################################################################
 // #################################################  BOT  ######################################################
 // ##############################################################################################################
@@ -97,62 +105,68 @@ async function checkIfBannedByShieldy(msg) {
 // Authorized account name characters
 const validAccountNameCharacters = ['.', '1', '2', '3', '4', '5', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 
             'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
+const newUsers = {}
+
+bot.on("newChatMembers", (msg) => {
+    if (!msg.new_chat_participant.is_bot) {
+        newUsers[msg.new_chat_participant.username] = Date.now()
+    }
+})
 
 bot.on('/groupId', async (msg) => {
     bot.sendMessage(msg.chat.id, `The ID of this chat group is: ${msg.chat.id}`)
 })
             
 bot.on('/new_account', async (msg) => {
-
-    // Don't accept requests from Telegram bots
-    if (msg.from.is_bot) {
-        bot.sendMessage(msg.chat.id, `😔 Sorry, bots are not allowed to create accounts`)
-        return
-    }
-
-    // Extracting accountName and publicKey from user msg
-    let [accountName, publicKey] = msg.text.split(' ').slice(1, 3)
-    accountName = accountName ? accountName.toLowerCase() : undefined
-
-    // Checking for name and key validity
-    const invalidCharaters = []
-    let hasDotAtInvalidPos = false
-    let isAccountNameAvailable = false
-    let isPubKeyValid = ecc.isValidPublic(publicKey)
-    
-    if (accountName && accountName.length === 12) {
-        accountName.split('').forEach((char, i) => {
-            if (!validAccountNameCharacters.includes(char)) invalidCharaters.push(char)
-            if ((i === 0 || i === 11) && char === '.') hasDotAtInvalidPos = true
-        })
-        if (invalidCharaters.length === 0 && !hasDotAtInvalidPos) {
-            isAccountNameAvailable = await checkIfNameIsAvailable(accountName)
+    try {
+        // Don't accept requests from Telegram bots
+        if (msg.from.is_bot) {
+            bot.sendMessage(msg.chat.id, `😔 Sorry, bots are not allowed to create accounts`)
+            return
         }
-    }
 
-    // Error message
-    if (!config.authorizedChatGroupIds.includes(msg.chat.id) && config.authorizedChatGroupIds.length !== 0) bot.sendMessage(msg.chat.id, `😔 Sorry, you need to be in the @wax_blockchain_meetup group to use this bot.`)
-    else if (!accountName || !publicKey) bot.sendMessage(msg.chat.id, `😔 Sorry, you need to provide accountName & publicKey`)
-    else if (accountName && accountName.length !== 12) bot.sendMessage(msg.chat.id, `😔 Sorry, your account name must be 12 characters long, no more, no less.`)
-    else if (invalidCharaters.length !== 0) bot.sendMessage(msg.chat.id, `😔 Sorry, the following character(s) are not allowed: \n${invalidCharaters.join('  ')}`)
-    else if (hasDotAtInvalidPos) bot.sendMessage(msg.chat.id, `😔 Sorry, you cannot use dots ( . ) for the first nor the last character of your account name.`)
-    else if (!isAccountNameAvailable) bot.sendMessage(msg.chat.id, `😔 Sorry, this account name is already taken.`)
-    else if (!isPubKeyValid) bot.sendMessage(msg.chat.id, `😔 Sorry, this public key is not valid.`)
-    
-    // Create account process
-    else {
-        let isBot = await checkIfBannedByShieldy(msg)
-        if (isBot) {
-            console.log(`Marked @${msg.from.username} ${msg.from.id} as a bot`)
-            return;
+        // Extracting accountName and publicKey from user msg
+        let [accountName, publicKey] = msg.text.split(' ').slice(1, 3)
+        accountName = accountName ? accountName.toLowerCase() : undefined
+
+        // Checking for name and key validity
+        const invalidCharaters = []
+        let hasDotAtInvalidPos = false
+        let isAccountNameAvailable = false
+        let isPubKeyValid = ecc.isValidPublic(publicKey)
+        
+        if (accountName && accountName.length === 12) {
+            accountName.split('').forEach((char, i) => {
+                if (!validAccountNameCharacters.includes(char)) invalidCharaters.push(char)
+                if ((i === 0 || i === 11) && char === '.') hasDotAtInvalidPos = true
+            })
+            if (invalidCharaters.length === 0 && !hasDotAtInvalidPos) {
+                isAccountNameAvailable = await checkIfNameIsAvailable(accountName)
+            }
         }
-        // @ts-ignore
-        let blackListedUserIds = readBlackList()
-        if (!blackListedUserIds.includes(msg.from.id)) {
-            setTimeout(async () => {
-                isBot = await checkIfBannedByShieldy(msg)
-                if (isBot) {
-                    console.log(`Marked @${msg.from.username} ${msg.from.id} as a bot`)
+
+        // Error message
+        if (!config.authorizedChatGroupIds.includes(msg.chat.id) && config.authorizedChatGroupIds.length !== 0) bot.sendMessage(msg.chat.id, `😔 Sorry, you need to be in the @wax_blockchain_meetup group to use this bot.`)
+        else if (!accountName || !publicKey) bot.sendMessage(msg.chat.id, `😔 Sorry, you need to provide accountName & publicKey`)
+        else if (accountName && accountName.length !== 12) bot.sendMessage(msg.chat.id, `😔 Sorry, your account name must be 12 characters long, no more, no less.`)
+        else if (invalidCharaters.length !== 0) bot.sendMessage(msg.chat.id, `😔 Sorry, the following character(s) are not allowed: \n${invalidCharaters.join('  ')}`)
+        else if (hasDotAtInvalidPos) bot.sendMessage(msg.chat.id, `😔 Sorry, you cannot use dots ( . ) for the first nor the last character of your account name.`)
+        else if (!isAccountNameAvailable) bot.sendMessage(msg.chat.id, `😔 Sorry, this account name is already taken.`)
+        else if (!isPubKeyValid) bot.sendMessage(msg.chat.id, `😔 Sorry, this public key is not valid.`)
+        
+        // Create account process
+        else {
+            let isBot = await checkIfBannedByShieldy(msg)
+            if (isBot) {
+                console.log(`Marked @${msg.from.username} ${msg.from.id} as a bot`)
+                return;
+            }
+            // @ts-ignore
+            let blackListedUserIds = readBlackList()
+            if (!blackListedUserIds.includes(msg.from.id)) {
+                const hasJoinedTooRecently = checkIfJoinedTooRecently(msg)
+                if (hasJoinedTooRecently) {
+                    console.log(`User @${msg.from.username} ${msg.from.id} has joined too recently, denying account creation`)
                     return;
                 }
                 bot.sendMessage(msg.chat.id, "Account creation in progress... ⏳")
@@ -164,14 +178,15 @@ bot.on('/new_account', async (msg) => {
                         ? `✅ Account created \n\nSee: https://wax.bloks.io/account/${accountName}`
                         : `✅ Account created`
                     bot.sendMessage(msg.chat.id, message, {webPreview: true})
+                    console.log(`User @${msg.from.username} ${msg.from.id} created WAX account: ${accountName}`)
                 } else {
-                    bot.sendMessage(msg.chat.id, `😔 Account created failed.\nPlease contact an admin in the @wax_blockchain_meetup group`)
+                    bot.sendMessage(msg.chat.id, `😔 Account creation failed.\nPlease contact an admin in the @wax_blockchain_meetup group`)
                 }
-            }, config.creationDelayMs)
-        } else {
-            bot.sendMessage(msg.chat.id, `😔 Sorry, you already have created an account.`)
+            } else {
+                bot.sendMessage(msg.chat.id, `😔 Sorry, you already have created an account.`)
+            }
         }
-    }
+    } catch (e) {console.log(e)}
 })
 
 // Display help message for users
@@ -188,4 +203,4 @@ Account names can contain optionnal dots . except for the first and last charact
 
 bot.on('text', (msg) => {console.log(`${msg.chat.id} - @${msg.from.username} (${msg.from.id} ${msg.from.first_name}): ${msg.text}`)})
 
-bot.connect()
+bot.start()
