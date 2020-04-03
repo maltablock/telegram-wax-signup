@@ -90,8 +90,8 @@ async function checkIfBannedByShieldy(msg) {
 }
 
 function checkIfJoinedTooRecently(msg) {
-    if (Object.keys(newUsers).includes(msg.from.username)) {
-        if ((Date.now() - newUsers[msg.from.username] < config.newUserDelayMs)) {
+    if (Object.keys(newUsers).includes(msg.from.id)) {
+        if ((Date.now() - newUsers[msg.from.id.toString()] < config.newUserDelayMs)) {
             return true
         } 
     } 
@@ -106,10 +106,11 @@ function checkIfJoinedTooRecently(msg) {
 const validAccountNameCharacters = ['.', '1', '2', '3', '4', '5', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 
             'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
 const newUsers = {}
+let accountCreationPending = false
 
 bot.on("newChatMembers", (msg) => {
     if (!msg.new_chat_participant.is_bot) {
-        newUsers[msg.new_chat_participant.username] = Date.now()
+        newUsers[msg.new_chat_participant.id.toString()] = Date.now()
     }
 })
 
@@ -119,9 +120,12 @@ bot.on('/groupId', async (msg) => {
             
 bot.on('/new_account', async (msg) => {
     try {
+        if (accountCreationPending) return
+        accountCreationPending = true
         // Don't accept requests from Telegram bots
         if (msg.from.is_bot) {
             bot.sendMessage(msg.chat.id, `😔 Sorry, bots are not allowed to create accounts`)
+            accountCreationPending = false
             return
         }
 
@@ -159,6 +163,7 @@ bot.on('/new_account', async (msg) => {
             let isBot = await checkIfBannedByShieldy(msg)
             if (isBot) {
                 console.log(`Marked @${msg.from.username} ${msg.from.id} as a bot`)
+                accountCreationPending = false
                 return;
             }
             // @ts-ignore
@@ -167,6 +172,7 @@ bot.on('/new_account', async (msg) => {
                 const hasJoinedTooRecently = checkIfJoinedTooRecently(msg)
                 if (hasJoinedTooRecently) {
                     console.log(`User @${msg.from.username} ${msg.from.id} has joined too recently, denying account creation`)
+                    accountCreationPending = false
                     return;
                 }
                 bot.sendMessage(msg.chat.id, "Account creation in progress... ⏳")
@@ -179,14 +185,23 @@ bot.on('/new_account', async (msg) => {
                         : `✅ Account created`
                     bot.sendMessage(msg.chat.id, message, {webPreview: true})
                     console.log(`User @${msg.from.username} ${msg.from.id} created WAX account: ${accountName}`)
+                    accountCreationPending = false
+                    return
                 } else {
                     bot.sendMessage(msg.chat.id, `😔 Account creation failed.\nPlease contact an admin in the @wax_blockchain_meetup group`)
+                    accountCreationPending = false
+                    return
                 }
             } else {
                 bot.sendMessage(msg.chat.id, `😔 Sorry, you already have created an account.`)
+                accountCreationPending = false
+                return
             }
         }
-    } catch (e) {console.log(e)}
+    } catch (e) {
+        console.log(e)
+        accountCreationPending = false
+    }
 })
 
 // Display help message for users
