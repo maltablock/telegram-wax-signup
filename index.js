@@ -30,6 +30,7 @@ const readBlackList = () => {
         return JSON.parse(contents)
     } catch (error) {
         console.error(`Error reading blacklist file: ${error.message}`)
+        return []
     }
 }
 
@@ -90,7 +91,7 @@ async function checkIfBannedByShieldy(msg) {
 }
 
 function checkIfJoinedTooRecently(msg) {
-    if (Object.keys(newUsers).includes(msg.from.id)) {
+    if (Object.keys(newUsers).includes(msg.from.id.toString())) {
         if ((Date.now() - newUsers[msg.from.id.toString()] < config.newUserDelayMs)) {
             return true
         } 
@@ -120,12 +121,9 @@ bot.on('/groupId', async (msg) => {
             
 bot.on('/new_account', async (msg) => {
     try {
-        if (accountCreationPending) return
-        accountCreationPending = true
         // Don't accept requests from Telegram bots
         if (msg.from.is_bot) {
             bot.sendMessage(msg.chat.id, `😔 Sorry, bots are not allowed to create accounts`)
-            accountCreationPending = false
             return
         }
 
@@ -163,44 +161,51 @@ bot.on('/new_account', async (msg) => {
             let isBot = await checkIfBannedByShieldy(msg)
             if (isBot) {
                 console.log(`Marked @${msg.from.username} ${msg.from.id} as a bot`)
-                accountCreationPending = false
                 return;
             }
-            // @ts-ignore
-            let blackListedUserIds = readBlackList()
-            if (!blackListedUserIds.includes(msg.from.id)) {
-                const hasJoinedTooRecently = checkIfJoinedTooRecently(msg)
-                if (hasJoinedTooRecently) {
-                    console.log(`User @${msg.from.username} ${msg.from.id} has joined too recently, denying account creation`)
-                    accountCreationPending = false
-                    return;
-                }
-                bot.sendMessage(msg.chat.id, "Account creation in progress... ⏳")
-                let isCreated = await transfer(accountName + '-' + publicKey)
-                if (isCreated) {
-                    blackListedUserIds.push(msg.from.id)
-                    fs.writeFileSync(getBlackListedFilePath(), JSON.stringify(blackListedUserIds))
-                    const message = config.shouldPostLinkToAccountAfterCreation 
-                        ? `✅ Account created \n\nSee: https://wax.bloks.io/account/${accountName}`
-                        : `✅ Account created`
-                    bot.sendMessage(msg.chat.id, message, {webPreview: true})
-                    console.log(`User @${msg.from.username} ${msg.from.id} created WAX account: ${accountName}`)
-                    accountCreationPending = false
-                    return
+
+            const hasJoinedTooRecently = checkIfJoinedTooRecently(msg)
+            if (hasJoinedTooRecently) {
+                console.log(`User @${msg.from.username} ${msg.from.id} has joined too recently, denying account creation`)
+                return;
+            }
+
+            if (accountCreationPending) {
+                bot.sendMessage(msg.chat.id, `😔 Sorry, another account creation is currently in progress.`)
+                return;
+            }
+
+            try {
+                accountCreationPending = true
+                let blackListedUserIds = readBlackList()
+                if (!blackListedUserIds.includes(msg.from.id)) {
+                    bot.sendMessage(msg.chat.id, "Account creation in progress... ⏳")
+                    let isCreated = await transfer(accountName + '-' + publicKey)
+                    if (isCreated) {
+                        blackListedUserIds.push(msg.from.id)
+                        fs.writeFileSync(getBlackListedFilePath(), JSON.stringify(blackListedUserIds))
+                        const message = config.shouldPostLinkToAccountAfterCreation 
+                            ? `✅ Account created \n\nSee: https://wax.bloks.io/account/${accountName}`
+                            : `✅ Account created`
+                        bot.sendMessage(msg.chat.id, message, {webPreview: true})
+                        console.log(`User @${msg.from.username} ${msg.from.id} created WAX account: ${accountName}`)
+                        return
+                    } else {
+                        bot.sendMessage(msg.chat.id, `😔 Account creation failed.\nPlease contact an admin in the @wax_blockchain_meetup group`)
+                        return
+                    }
                 } else {
-                    bot.sendMessage(msg.chat.id, `😔 Account creation failed.\nPlease contact an admin in the @wax_blockchain_meetup group`)
-                    accountCreationPending = false
+                    bot.sendMessage(msg.chat.id, `😔 Sorry, you already have created an account.`)
                     return
                 }
-            } else {
-                bot.sendMessage(msg.chat.id, `😔 Sorry, you already have created an account.`)
+            } catch (error) {
+                console.error(error)
+            } finally {
                 accountCreationPending = false
-                return
             }
         }
     } catch (e) {
-        console.log(e)
-        accountCreationPending = false
+        console.error(e)
     }
 })
 
