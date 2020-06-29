@@ -157,7 +157,6 @@ const canCreateAccount = async (msg) => {
 
   return true;
 };
-const createAccount = async (accountName) => {};
 
 bot.on("newChatMembers", (msg) => {
   if (!msg.new_chat_participant.is_bot) {
@@ -189,8 +188,15 @@ bot.on("/new_account", async (msg) => {
     let isAccountNameAvailable = await checkIfNameIsAvailable(accountName);
 
     // Error message
-    if (!config.authorizedChatGroupIds.includes(msg.chat.id) && config.authorizedChatGroupIds.length !== 0) bot.sendMessage(msg.chat.id, `😔 Sorry, you need to be in the @wax_blockchain_meetup group to use this bot.`)
-    if (!accountName || !publicKey)
+    if (
+      !config.authorizedChatGroupIds.includes(msg.chat.id) &&
+      config.authorizedChatGroupIds.length !== 0
+    )
+      await bot.sendMessage(
+        msg.chat.id,
+        `😔 Sorry, you need to be in the @wax_blockchain_meetup group to use this bot.`
+      );
+    else if (!accountName || !publicKey)
       await bot.sendMessage(
         msg.chat.id,
         `😔 Sorry, you need to provide accountName & publicKey`
@@ -211,7 +217,10 @@ bot.on("/new_account", async (msg) => {
         `😔 Sorry, this account name is already taken.`
       );
     else if (!isPubKeyValid)
-      await bot.sendMessage(msg.chat.id, `😔 Sorry, this public key is not valid.`);
+      await bot.sendMessage(
+        msg.chat.id,
+        `😔 Sorry, this public key is not valid.`
+      );
     // Create account process
     else {
       const canCreate = await canCreateAccount(msg);
@@ -228,7 +237,10 @@ bot.on("/new_account", async (msg) => {
           return;
         }
 
-        await bot.sendMessage(msg.chat.id, "Account creation in progress... ⏳");
+        await bot.sendMessage(
+          msg.chat.id,
+          "Account creation in progress... ⏳"
+        );
         let isCreated = await transfer(accountName + "-" + publicKey);
         if (isCreated) {
           blackListedUserIds.push(msg.from.id);
@@ -236,9 +248,10 @@ bot.on("/new_account", async (msg) => {
             getBlackListedFilePath(),
             JSON.stringify(blackListedUserIds)
           );
-          const message = config.shouldPostLinkToAccountAfterCreation
+          let message = config.shouldPostLinkToAccountAfterCreation
             ? `✅ Account created \n\nSee: https://wax.bloks.io/account/${accountName}`
             : `✅ Account created`;
+          message = `${message}\n⚠️ Make sure to safely store your private key or you won't be able to access the account!`;
           await bot.sendMessage(msg.chat.id, message, { webPreview: true });
           console.log(
             `User @${msg.from.username} ${msg.from.id} created WAX account: ${accountName}`
@@ -279,17 +292,32 @@ bot.on("/copy_account", async (msg) => {
 
     // Checking for name and key validity
     let eosAccount = await getEosAccount(accountName);
-    const ownerPerm = eosAccount.permissions.find(p => p.perm_name === `owner`)
-    const activePerm = eosAccount.permissions.find(p => p.perm_name === `active`)
-    let ownerKey = ownerPerm.required_auth.keys[0] ? ownerPerm.required_auth.keys[0].key : ``
-    let activeKey = activePerm.required_auth.keys[0] ? activePerm.required_auth.keys[0].key : ``
-    ownerKey = ownerKey || activeKey
-    activeKey = activeKey || ownerKey
+    const ownerPerm = eosAccount.permissions.find(
+      (p) => p.perm_name === `owner`
+    );
+    const activePerm = eosAccount.permissions.find(
+      (p) => p.perm_name === `active`
+    );
+    let ownerKey = ownerPerm.required_auth.keys[0]
+      ? ownerPerm.required_auth.keys[0].key
+      : ``;
+    let activeKey = activePerm.required_auth.keys[0]
+      ? activePerm.required_auth.keys[0].key
+      : ``;
+    ownerKey = ownerKey || activeKey;
+    activeKey = activeKey || ownerKey;
     let isAccountNameAvailable = await checkIfNameIsAvailable(accountName);
 
     // Error message
-    if (!config.authorizedChatGroupIds.includes(msg.chat.id) && config.authorizedChatGroupIds.length !== 0) bot.sendMessage(msg.chat.id, `😔 Sorry, you need to be in the @wax_blockchain_meetup group to use this bot.`)
-    if (!accountName)
+    if (
+      !config.authorizedChatGroupIds.includes(msg.chat.id) &&
+      config.authorizedChatGroupIds.length !== 0
+    )
+      await bot.sendMessage(
+        msg.chat.id,
+        `😔 Sorry, you need to be in the @wax_blockchain_meetup group to use this bot.`
+      );
+    else if (!accountName)
       await bot.sendMessage(
         msg.chat.id,
         `😔 Sorry, you need to provide an EOS accountName`
@@ -330,9 +358,14 @@ bot.on("/copy_account", async (msg) => {
           return;
         }
 
-        await bot.sendMessage(msg.chat.id, "Account creation in progress... ⏳");
-        console.log(`${accountName}-${ownerKey}-${activeKey}`)
-        let isCreated = await transfer(`${accountName}-${ownerKey}-${activeKey}`);
+        await bot.sendMessage(
+          msg.chat.id,
+          "Account creation in progress... ⏳"
+        );
+        console.log(`${accountName}-${ownerKey}-${activeKey}`);
+        let isCreated = await transfer(
+          `${accountName}-${ownerKey}-${activeKey}`
+        );
         if (isCreated) {
           blackListedUserIds.push(msg.from.id);
           fs.writeFileSync(
@@ -370,7 +403,8 @@ bot.on(["/help", "/start"], (msg) => {
   if (msg.from.is_bot) return;
   bot.sendMessage(
     msg.chat.id,
-    `Use /new_account accountName publicKey 
+    `Use "/new_account accountName publicKey" to create a new account on WAX.
+Or use "/copy_account eosAccountName" to simply copy an account from EOS mainnet to WAX using the same permissions.
         
 Account names should be 12 characters long, no more, no less.
 Account names should only contain letters [A-Z], numbers [1-5] 
@@ -392,4 +426,3 @@ process.on("unhandledRejection", function (reason, p) {
   console.error(`Possibly Unhandled Rejection at: ${message}`);
   process.exit(1);
 });
- 
