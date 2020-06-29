@@ -13,7 +13,8 @@ const config = {
     "waxPermission": WAX_PERMISSION || "active",
     "waxSmartContractName": "signupwaxwax",
     "waxAmount": "1.50000000 WAX",
-    "apiEndpoint": "https://chain.wax.io",
+    "waxRpcEndpoint": "https://chain.wax.io",
+    "eosRpcEndpoint": "https://eos.eosn.io",
     "shouldPostLinkToAccountAfterCreation": true,
     "newUserDelayMs": 65000 
 }
