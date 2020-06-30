@@ -9,8 +9,9 @@ const { Api, JsonRpc, RpcError } = require("eosjs");
 const { JsSignatureProvider } = require("eosjs/dist/eosjs-jssig");
 const fetch = require("node-fetch");
 const { TextEncoder, TextDecoder } = require("util");
-const privateKeys = [config.keys.wax];
-const signatureProvider = new JsSignatureProvider(privateKeys);
+const { incrementNameCounter, getNextPremiumName, createPremiumName } = require("./premiumNames");
+
+const signatureProvider = new JsSignatureProvider(config.keys.wax);
 // @ts-ignore
 const eosRpc = new JsonRpc(config.eosRpcEndpoint, { fetch });
 const waxRpc = new JsonRpc(config.waxRpcEndpoint, { fetch });
@@ -115,6 +116,11 @@ async function checkIfBannedByShieldy(msg) {
   return isBanned;
 }
 
+function shouldIgnoreMessageInDevelopment(msg) {
+  // ignore if dev mode and not from developer
+  return process.env.NODE_ENV === `development` && msg.from.id !== config.telegramDeveloperId
+}
+
 function checkIfJoinedTooRecently(msg) {
   if (Object.keys(newUsers).includes(msg.from.id.toString())) {
     if (Date.now() - newUsers[msg.from.id.toString()] < config.newUserDelayMs) {
@@ -170,6 +176,10 @@ bot.on("/groupId", async (msg) => {
 
 bot.on("/new_account", async (msg) => {
   try {
+    if(shouldIgnoreMessageInDevelopment(msg)) {
+      return;
+    }
+
     // Don't accept requests from Telegram bots
     if (msg.from.is_bot) {
       await bot.sendMessage(
@@ -275,8 +285,11 @@ bot.on("/new_account", async (msg) => {
   }
 });
 
-bot.on("/copy_account", async (msg) => {
+bot.on("/easy_account", async (msg) => {
   try {
+    if(shouldIgnoreMessageInDevelopment(msg)) {
+      return;
+    }
     // Don't accept requests from Telegram bots
     if (msg.from.is_bot) {
       bot.sendMessage(
@@ -287,11 +300,11 @@ bot.on("/copy_account", async (msg) => {
     }
 
     // Extracting accountName from user msg
-    let [accountName] = msg.text.split(" ").slice(1, 3);
-    accountName = accountName ? accountName.toLowerCase() : undefined;
+    let [eosAccountName] = msg.text.split(" ").slice(1, 3);
+    eosAccountName = eosAccountName ? eosAccountName.toLowerCase() : undefined;
 
     // Checking for name and key validity
-    let eosAccount = await getEosAccount(accountName);
+    let eosAccount = await getEosAccount(eosAccountName);
     const ownerPerm = eosAccount.permissions.find(
       (p) => p.perm_name === `owner`
     );
@@ -306,7 +319,10 @@ bot.on("/copy_account", async (msg) => {
       : ``;
     ownerKey = ownerKey || activeKey;
     activeKey = activeKey || ownerKey;
-    let isAccountNameAvailable = await checkIfNameIsAvailable(accountName);
+
+    const waxAccountName = getNextPremiumName()
+    let isWaxAccountStillFree = await checkIfNameIsAvailable(waxAccountName);
+    console.log(`premium name: "${waxAccountName}". Free? ${isWaxAccountStillFree}`)
 
     // Error message
     if (
@@ -317,12 +333,12 @@ bot.on("/copy_account", async (msg) => {
         msg.chat.id,
         `😔 Sorry, you need to be in the @wax_blockchain_meetup group to use this bot.`
       );
-    else if (!accountName)
+    else if (!eosAccountName)
       await bot.sendMessage(
         msg.chat.id,
         `😔 Sorry, you need to provide an EOS accountName`
       );
-    else if (!/^[a-z1-5]{12}$/.test(accountName))
+    else if (!/^[a-z1-5\.]{1,13}$/.test(eosAccountName))
       await bot.sendMessage(
         msg.chat.id,
         `😔 Sorry, your account name contains invalid characters. It must be 12 characters long and not be a special account name. Allowed characters: a-z, 1-5 or ".".`
@@ -337,11 +353,15 @@ bot.on("/copy_account", async (msg) => {
         msg.chat.id,
         `😔 Sorry, the account "${accountName}" does not have any keys in their owner/active permissions.`
       );
-    else if (!isAccountNameAvailable)
+    else if (!isWaxAccountStillFree) {
+      // this means the counter is wrong
+      console.log(`incrementing counter because WAX premium account already existed`)
+      incrementNameCounter()
       await bot.sendMessage(
         msg.chat.id,
-        `😔 Sorry, this account name is already taken on WAX.`
+        `😔 Sorry, something went wrong when creating the account.`
       );
+    }
     // Create account process
     else {
       const canCreate = await canCreateAccount(msg);
@@ -362,22 +382,23 @@ bot.on("/copy_account", async (msg) => {
           msg.chat.id,
           "Account creation in progress... ⏳"
         );
-        console.log(`${accountName}-${ownerKey}-${activeKey}`);
-        let isCreated = await transfer(
-          `${accountName}-${ownerKey}-${activeKey}`
+        console.log(`${waxAccountName}-${ownerKey}-${activeKey}`);
+        let isCreated = await createPremiumName(
+          api, waxAccountName, ownerKey, activeKey
         );
         if (isCreated) {
+          incrementNameCounter()
           blackListedUserIds.push(msg.from.id);
           fs.writeFileSync(
             getBlackListedFilePath(),
             JSON.stringify(blackListedUserIds)
-          );
+            );
           const message = config.shouldPostLinkToAccountAfterCreation
-            ? `✅ Account created \n\nSee: https://wax.bloks.io/account/${accountName}`
+            ? `✅ Account created \n\nSee: https://wax.bloks.io/account/${waxAccountName}`
             : `✅ Account created`;
           await bot.sendMessage(msg.chat.id, message, { webPreview: true });
           console.log(
-            `User @${msg.from.username} ${msg.from.id} created WAX account: ${accountName}`
+            `User @${msg.from.username} ${msg.from.id} created WAX account: ${waxAccountName}`
           );
           return;
         } else {
@@ -404,7 +425,7 @@ bot.on(["/help", "/start"], (msg) => {
   bot.sendMessage(
     msg.chat.id,
     `Use "/new_account accountName publicKey" to create a new account on WAX.
-Or use "/copy_account eosAccountName" to simply copy an account from EOS mainnet to WAX using the same permissions.
+Or use "/easy_account eosAccountName" to simply copy an account from EOS mainnet to WAX using the same permissions.
         
 Account names should be 12 characters long, no more, no less.
 Account names should only contain letters [A-Z], numbers [1-5] 
