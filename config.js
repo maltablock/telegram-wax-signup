@@ -9,6 +9,7 @@ const config = {
         "wax": EOSIO_PRIVATE_KEYS.split(`;`),
     },
     "authorizedChatGroupIds": [-1001182060025],
+    "adminUsers": [351493783, 531086315],
     "waxAccountName": WAX_ACCOUNT_NAME || "waxmeetupbot",
     "waxPermission": WAX_PERMISSION || "active",
     "waxSmartContractName": "signupwaxwax",
